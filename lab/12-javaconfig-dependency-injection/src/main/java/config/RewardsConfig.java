@@ -1,5 +1,16 @@
 package config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import rewards.RewardNetwork;
+import rewards.internal.RewardNetworkImpl;
+import rewards.internal.account.AccountRepository;
+import rewards.internal.account.JdbcAccountRepository;
+import rewards.internal.restaurant.JdbcRestaurantRepository;
+import rewards.internal.restaurant.RestaurantRepository;
+import rewards.internal.reward.JdbcRewardRepository;
+import rewards.internal.reward.RewardRepository;
+
 import javax.sql.DataSource;
 
 /**
@@ -42,9 +53,39 @@ import javax.sql.DataSource;
  *   not an implementation.
  */
 
+@Configuration
 public class RewardsConfig {
+
+	public RewardsConfig(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 
 	// Set this by adding a constructor.
 	private DataSource dataSource;
 
+	@Bean
+	public AccountRepository accountRepository() {
+		var rep = new JdbcAccountRepository();
+		rep.setDataSource(dataSource);
+		return rep;
+	}
+
+	@Bean
+	public RestaurantRepository restaurantRepository() {
+		var rep = new JdbcRestaurantRepository();
+		rep.setDataSource(dataSource);
+		return rep;
+	}
+
+	@Bean
+	public RewardRepository rewardRepository() {
+		var rep = new JdbcRewardRepository();
+		rep.setDataSource(dataSource);
+		return rep;
+	}
+
+	@Bean
+	public RewardNetwork rewardNetwork(AccountRepository accountRepository, RestaurantRepository restaurantRepository, RewardRepository rewardRepository) {
+		return new RewardNetworkImpl(accountRepository, restaurantRepository, rewardRepository);
+	}
 }
