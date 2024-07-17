@@ -1,8 +1,13 @@
 package rewards;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -34,6 +39,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { SystemTestConfig.class })
 public class RewardNetworkPropagationTests {
+
+	@BeforeEach
+	public void setup() {
+		// Using Logback for logging.
+		// Enable DEBUG logging so we can see the transactions
+		Logger jdbcLogger = (Logger) LoggerFactory
+				.getLogger("org.springframework.jdbc.datasource.DataSourceTransactionManager");
+		jdbcLogger.setLevel(Level.DEBUG);
+
+	}
 
 	/**
 	 * The object being tested.
