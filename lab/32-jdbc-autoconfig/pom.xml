@@ -27,17 +27,23 @@
              dependencies to JDBC and Test Spring Boot Starters -->
 
         <!-- Needed for the Spring JdbcTemplate -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>3.3.2</version>
         </dependency>
 
+
         <!-- Spring Integration testing support -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>3.3.2</version>
             <scope>test</scope>
         </dependency>
+
 
         <!-- Database - DO NOT MODIFY -->
         <dependency>
@@ -57,8 +63,13 @@
          <plugins>
             <!-- TO-DO-01 : Add the Spring Boot Plugin - see detailed instructions
                 for the XML you need. -->
+             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
+             <plugin>
+                 <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-maven-plugin</artifactId>
+             </plugin>
 
-            <!-- Ensure resources are handled correctly -->
+             <!-- Ensure resources are handled correctly -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
